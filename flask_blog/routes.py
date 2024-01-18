@@ -32,7 +32,6 @@ def about():
 @app.route("/register", methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
-        flash(f'You already have an account!', 'success')
         return redirect(url_for('home'))
     form = RegistrationForm()
     if form.validate_on_submit():
@@ -47,7 +46,6 @@ def register():
 @app.route("/login", methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
-        # flash(f'You are already logged in!', 'success')
         return redirect(url_for('home'))
     form = LoginForm()
     if form.validate_on_submit():
@@ -55,9 +53,8 @@ def login():
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user, remember=form.remember.data)
             next_page = request.args.get('next')
+            flash(f'You have Successfully Logged In!', 'success')
             return redirect(next_page) if next_page else redirect(url_for('home'))
-        # if form.email.data == 'admin@blog.com' and form.password.data == 'password':
-        #     flash(f'You have Successfully Logged In!', 'success')
         else:
             flash('Login Unsuccessful. Please check email and password you entered!', 'danger')
     return render_template('login.html', title='Login', form=form)
