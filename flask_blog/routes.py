@@ -133,3 +133,13 @@ def delete_post(post_id):
     db.session.commit()
     flash('Your post have been successfully deleted.', 'success')
     return redirect(url_for('home'))
+
+@app.route("/user/<string:user_name>")
+def user_posts(user_name):
+    page = request.args.get('page', 1, type=int)
+    user = User.query.filter_by(user_name=user_name).first_or_404()
+    # posts = user.posts.order_by(Post.date_posted.desc()).paginate(page=page, per_page=5)
+    posts = Post.query.filter_by(author=user)\
+        .order_by(Post.date_posted.desc())\
+        .paginate(page=page, per_page=3)
+    return render_template('user_posts.html', posts=posts, user=user)
