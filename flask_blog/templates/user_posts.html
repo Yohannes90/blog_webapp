@@ -1,13 +1,16 @@
 {% extends 'layout.html'%}
 {% block content%}
-    <div class="media">
-    <img class="rounded-circle account-img" src="{{ url_for('static', filename='profile_pics/' + user.image_file) }}">
-    <div class="media-body">
-      <h2 class="account-heading">{{ user.user_name }}</h2>
-      <p class="text-secondary ml-2">{{ user.email }}</p>
-      <p class="text-secondary ml-2">{{ posts.total }} total posts.</p>
-    </div>
-  </div>
+    <article class="media content-section">
+      <div class="media">
+        <img class="rounded-circle account-img" src="{{ url_for('static', filename='profile_pics/' + user.image_file) }}">
+        <div class="media-body">
+          <h2 class="account-heading">{{ user.user_name }}</h2>
+          <p class="text-secondary ml-2">{{ user.email }}</p>
+          <p class="text-secondary ml-2">{{ posts.total }} total posts.</p>
+        </div>
+      </div>
+    </article>
+
     {% for post in posts.items %}
     <article class="media content-section">
       <img class="rounded-circle article-img" src="{{ url_for('static', filename='profile_pics/' + post.author.image_file) }}"/>
@@ -21,11 +24,12 @@
         </div>
       </article>
     {% endfor %}
+
     <div class="text-center">
         {% for page_num in posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=1) %}
         {% if page_num %}
             {% if posts.page == page_num %}
-            <a class="btn btn-primary mb-4"href="{{ url_for('user_posts', user_name=user.user_name, page=page_num) }}">{{ page_num }}</a>
+            <a class="btn btn-info mb-4"href="{{ url_for('user_posts', user_name=user.user_name, page=page_num) }}">{{ page_num }}</a>
             {% else %}
             <a class="btn btn-outline-info mb-4" href="{{ url_for('user_posts', user_name=user.user_name, page=page_num) }}">{{ page_num }}</a>
             {% endif%}
@@ -34,4 +38,5 @@
         {% endif%}
         {% endfor %}
     </div>
+    
 {% endblock content %}
