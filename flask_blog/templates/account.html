@@ -8,6 +8,7 @@
             <p class="text-secondary ml-2">{{ current_user.email }}</p>
           </div>
         </div>
+
         <form method="POST" action="" enctype="multipart/form-data">
             {{ form.hidden_tag() }}
             <fieldset class="form-group">
@@ -26,6 +27,7 @@
                         {{ form.user_name(class="form-control form-control-lg") }}
                     {% endif %}
                 </div>
+
                 <div class="form-group">
                     {{ form.email.label(class="form-control-label") }}
                     {% if form.email.errors %}
@@ -39,6 +41,7 @@
                         {{ form.email(class="form-control form-control-lg") }}
                     {% endif %}
                 </div>
+
                 <div class="form-group">
                     {{ form.picture.label() }}
                     {{ form.picture(class="form-control-file") }}
@@ -49,6 +52,7 @@
                     {% endif %}
                 </div>
             </fieldset>
+            
             <div class="form-group">
                 {{ form.submit(class="btn btn-outline-info") }}
             </div>
